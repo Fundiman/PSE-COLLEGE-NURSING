@@ -5,8 +5,8 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="TemplateMo">
+    <meta name="description" content="The official website of PSE College Of Nursing">
+    <meta name="author" content="PSE College Of Nursing">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
     <title>PSE College of Nursing</title>
@@ -19,9 +19,12 @@
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/lightbox.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
   </head>
 
 <body>
@@ -56,29 +59,136 @@
   </header>
   <!-- ***** Header Area End ***** -->
 
-  <!-- ***** Main Banner Area Start ***** -->
-  <section class="section main-banner" id="top" data-section="section1">
-      <img src="assets/images/college.jpg" alt="Picture of PSE College">
-
-      <div class="video-overlay header-text">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="caption">
+  <section class="section main-banner" id="top" style="position:relative; overflow:hidden; width:100%; height:auto;">
+    <div id="slider" style="display:flex; width:200%; transition: transform 0.5s ease;">
+      <img src="assets/images/college.jpg" alt="Picture Of PSE Nursing College" style="width:50%; height:auto;">
+      <img src="assets/images/computer-lab.jpg" alt="Picture Of Our Computer Lab" style="width:50%; height:auto;">
+      <img src="assets/images/lab1.jpeg" alt="Picture Of Our Biology Lab" style="width:50%; height:auto;">
+      <img src="assets/images/med-lab2.jpeg" alt="Picture Of Medical Dummies" style="width:50%; height:auto;">
+      <img src="assets/images/facts-bg.jpeg" alt="Picture Of Our Science Lab" style="width:50%; height:auto;">
+    </div>
+  
+    <!-- Text overlay, outside the slider div -->
+    <div class="video-overlay header-text" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+      <div class="container" style="pointer-events:auto;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="caption" style="color:white; padding:20px;">
               <h6>Best College in Lahore</h6>
-                 <h2>PSE College of Nursing</h2>
+              <h2>PSE College of Nursing</h2>
               <p>At PSE College of Nursing, we are dedicated to shaping the future of healthcare by providing a transformative education that combines cutting-edge nursing theory with real-world clinical experience, ensuring our students graduate as skilled, compassionate, and confident professionals ready to make a lasting impact in the world of healthcare.</p>
               <div class="main-button-red">
-                  <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
-              </div>
-          </div>
+                <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
               </div>
             </div>
           </div>
+        </div>
       </div>
+    </div>
+  
+    <!-- Buttons here -->
+    <div id="backBtn" style="position:absolute; top:500px; left:20px; cursor:pointer; width:40px; height:40px; z-index:10; display:flex; justify-content:center; align-items:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3" style="transition: fill 0.3s ease;">
+        <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/>
+      </svg>
+    </div>
+  
+    <div id="forwardBtn" style="position:absolute; top:500px; right:20px; cursor:pointer; width:40px; height:40px; z-index:10; display:flex; justify-content:center; align-items:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3" style="transition: fill 0.3s ease;">
+        <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/>
+      </svg>
+    </div>
   </section>
-  <!-- ***** Main Banner Area End ***** -->
+  
+  <style>
+    #backBtn:hover svg,
+    #forwardBtn:hover svg {
+      fill: #f5a425;
+    }
+    #backBtn:active svg,
+    #forwardBtn:active svg {
+      fill: #ffa726;
+    }
+  </style>
+<script>
+  const backBtn = document.getElementById('backBtn');
+  const forwardBtn = document.getElementById('forwardBtn');
+  const slider = document.getElementById('slider');
+  let slides = Array.from(slider.querySelectorAll('img'));
+  const total = slides.length;
 
+  // Clone first and last
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+  slider.insertBefore(lastClone, slides[0]);
+  slider.appendChild(firstClone);
+
+  // Update slides list
+  slides = Array.from(slider.querySelectorAll('img'));
+  const slideCount = slides.length;
+  const slideWidth = 100 / slideCount;
+
+  // Style updates
+  slider.style.width = `${slideCount * 100}%`;
+  slides.forEach(slide => {
+    slide.style.width = `${100 / slideCount}%`;
+    slide.style.flexShrink = "0";
+  });
+
+  let currentIndex = 1;
+  let transitioning = false;
+  slider.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+
+  function updateSlider() {
+    if (transitioning) return;
+    transitioning = true;
+    slider.style.transition = 'transform 0.5s ease';
+    slider.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+  }
+
+  function handleTransitionEnd() {
+    transitioning = false;
+    slider.style.transition = 'none';
+
+    if (currentIndex === 0) {
+      currentIndex = total;
+      slider.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+    } else if (currentIndex === slideCount - 1) {
+      currentIndex = 1;
+      slider.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+    }
+  }
+
+  slider.addEventListener('transitionend', handleTransitionEnd);
+
+  backBtn.addEventListener('click', () => {
+    if (transitioning) return;
+    currentIndex--;
+    updateSlider();
+    resetAutoSlide();
+  });
+
+  forwardBtn.addEventListener('click', () => {
+    if (transitioning) return;
+    currentIndex++;
+    updateSlider();
+    resetAutoSlide();
+  });
+
+  let autoSlideInterval = setInterval(() => {
+    currentIndex++;
+    updateSlider();
+  }, 5000);
+
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(() => {
+      currentIndex++;
+      updateSlider();
+    }, 5000);
+  }
+</script>
+      
   <section class="services" id="services">
     <div class="container">
       <div class="row">
@@ -250,20 +360,6 @@
     </div>
   </section>
 
-  <section class="our-courses" id="courses">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="contact-us" id="contact">
     <div class="container">
@@ -379,7 +475,6 @@
           window.location.href = mailtoLink;
       });
   </script>
-  
 </body>
 
 </body>
